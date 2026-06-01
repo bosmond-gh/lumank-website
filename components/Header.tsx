@@ -1,47 +1,67 @@
 "use client";
 import Link from "next/link";
-import Image from "next/image";
 import { useState } from "react";
-
-const navLinks = [
-  { href: "/services", label: "Services" },
-  { href: "/weatherization", label: "Weatherization" },
-  { href: "/government-contracting", label: "Government" },
-  { href: "/projects", label: "Projects" },
-  { href: "/about", label: "About" },
-  { href: "/contact", label: "Contact" },
-];
 
 export default function Header() {
   const [open, setOpen] = useState(false);
   return (
-    <header className="bg-[#1A1A1A] text-white sticky top-0 z-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16">
-          <Link href="/" className="flex items-center gap-3">
-            <Image src="/lumank-logo.png" alt="Lumank Inc." width={40} height={40} className="object-contain" />
-            <span className="font-serif text-xl font-bold tracking-wide">LUMANK<span className="text-[#E87722]"> INC.</span></span>
+    <>
+      <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800;900&family=Barlow:wght@300;400;500;600&display=swap');
+        .hdr { background: #0A0A0A; position: sticky; top: 0; z-index: 1000; border-bottom: 1px solid #1a1a1a; }
+        .hdr-inner { max-width: 1280px; margin: 0 auto; padding: 0 32px; display: flex; align-items: center; justify-content: space-between; height: 68px; }
+        .hdr-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+        .hdr-mark { width: 36px; height: 36px; background: #E87722; border-radius: 4px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+        .hdr-mark span { color: white; font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-size: 18px; }
+        .hdr-name { font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: 20px; color: white; letter-spacing: 1px; text-transform: uppercase; }
+        .hdr-name em { color: #E87722; font-style: normal; }
+        .hdr-right { display: flex; align-items: center; gap: 4px; }
+        .hdr-link { color: #999; text-decoration: none; font-family: 'Barlow', sans-serif; font-size: 14px; font-weight: 500; padding: 8px 12px; border-radius: 6px; transition: all 0.2s; white-space: nowrap; }
+        .hdr-link:hover { color: white; background: #1a1a1a; }
+        .hdr-phone { color: #E87722; font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 15px; padding: 8px 12px; white-space: nowrap; }
+        .hdr-cta { background: #E87722; color: white !important; padding: 9px 20px !important; border-radius: 6px; font-weight: 600; font-size: 14px; margin-left: 8px; }
+        .hdr-cta:hover { background: #C9621A !important; }
+        .hdr-menu-btn { display: none; background: none; border: 1px solid #333; border-radius: 6px; padding: 8px 10px; cursor: pointer; flex-direction: column; gap: 4px; }
+        .hdr-menu-btn span { display: block; width: 20px; height: 2px; background: #999; border-radius: 2px; }
+        .hdr-mobile { display: none; background: #0f0f0f; border-top: 1px solid #1a1a1a; padding: 16px 20px; flex-direction: column; gap: 4px; }
+        .hdr-mobile.open { display: flex; }
+        .hdr-mobile a { color: #999; text-decoration: none; font-family: 'Barlow', sans-serif; font-size: 15px; padding: 12px 16px; border-radius: 6px; }
+        .hdr-mobile a:hover { color: white; background: #1a1a1a; }
+        @media(max-width: 900px) {
+          .hdr-right { display: none; }
+          .hdr-menu-btn { display: flex; }
+          .hdr-inner { padding: 0 20px; }
+        }
+      `}</style>
+      <header className="hdr">
+        <div className="hdr-inner">
+          <Link href="/" className="hdr-logo">
+            <div className="hdr-mark"><span>L</span></div>
+            <span className="hdr-name">LUMANK<em> INC.</em></span>
           </Link>
-          <nav className="hidden md:flex items-center gap-7">
-            {navLinks.map(l => (
-              <Link key={l.href} href={l.href} className="text-sm font-medium text-gray-200 hover:text-[#E87722] transition-colors">{l.label}</Link>
-            ))}
-            <Link href="/contact" className="ml-4 bg-[#E87722] text-white px-4 py-2 rounded text-sm font-semibold hover:bg-orange-600">Get a Quote</Link>
+          <nav className="hdr-right">
+            <Link href="/services" className="hdr-link">Services</Link>
+            <Link href="/weatherization" className="hdr-link">Weatherization</Link>
+            <Link href="/government-contracting" className="hdr-link">Government</Link>
+            <Link href="/projects" className="hdr-link">Projects</Link>
+            <Link href="/about" className="hdr-link">About</Link>
+            <a href="tel:8444586265" className="hdr-link hdr-phone">1(844) 458-6265</a>
+            <Link href="/contact" className="hdr-link hdr-cta">Request a Quote</Link>
           </nav>
-          <button className="md:hidden p-2" onClick={() => setOpen(!open)}>
-            <span className="block w-6 h-0.5 bg-white mb-1"></span>
-            <span className="block w-6 h-0.5 bg-white mb-1"></span>
-            <span className="block w-6 h-0.5 bg-white"></span>
+          <button className="hdr-menu-btn" onClick={() => setOpen(!open)} aria-label="Menu">
+            <span/><span/><span/>
           </button>
         </div>
-      </div>
-      {open && (
-        <div className="md:hidden bg-[#111] px-4 py-4 flex flex-col gap-4">
-          {navLinks.map(l => (
-            <Link key={l.href} href={l.href} className="text-gray-200 hover:text-[#E87722]" onClick={() => setOpen(false)}>{l.label}</Link>
-          ))}
-        </div>
-      )}
-    </header>
+        <nav className={`hdr-mobile ${open ? 'open' : ''}`}>
+          <Link href="/services" onClick={() => setOpen(false)}>Services</Link>
+          <Link href="/weatherization" onClick={() => setOpen(false)}>Weatherization</Link>
+          <Link href="/government-contracting" onClick={() => setOpen(false)}>Government Contracting</Link>
+          <Link href="/projects" onClick={() => setOpen(false)}>Projects</Link>
+          <Link href="/about" onClick={() => setOpen(false)}>About Us</Link>
+          <Link href="/contact" onClick={() => setOpen(false)} style={{color:'#E87722',fontWeight:600}}>Request a Quote</Link>
+          <a href="tel:8444586265" style={{color:'#E87722'}}>📎 1(844) 458-6265</a>
+        </nav>
+      </header>
+    </>
   );
 }
